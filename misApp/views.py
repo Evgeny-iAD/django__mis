@@ -9,11 +9,6 @@ from django.db.models import Q
 
 logger = logging.getLogger(__name__)
 
-def mis(request):
-    logger.info('Получен доступ к странице картотеки МИС')
-    return HttpResponse("МЕТОД Картотека из МИС будет здесь")
-
-
 def get_patient_info(request, patient_id):
     patient = Pacient.objects.get(id=patient_id)
     return JsonResponse({
@@ -70,16 +65,12 @@ class MisWork(TemplateView):
             q_objects &= Q(birth_date__gte=date_from)
         if date_to:
             q_objects &= Q(birth_date__lte=date_to)
-        # Добавьте другие условия, если они есть
 
         # Фильтрация пациентов по критериям
         patients = Pacient.objects.filter(q_objects)
-
-
         # Передача отфильтрованных пациентов в контекст и отрисовка шаблона
         context = {'patients': patients,
                    'filter': self.request.session.get('filter', {})}
         # Загрузка фильтра из сессии
-        # context['filter'] = self.request.session.get('filter', {})
         return render(request, self.template_name, context)
 
