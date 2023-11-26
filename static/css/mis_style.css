@@ -1,0 +1,266 @@
+/* Файл mis_style.css */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.main-header {
+    background-color: #e9e9e9;
+    border-bottom: 2px solid #d3d3d3;
+}
+
+.main-menu ul, .tab-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.main-menu ul li{
+    padding: 10px 20px;
+	z-index: 1; /* Убедитесь, что вкладка находится над другими элементами */
+}
+
+.main-menu ul li a{
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.main-menu ul li a:hover{
+    background-color: #d3d3d3;
+}
+
+/* ... ВКЛАДКА КАРТОТЕКА ... */
+.tab-menu ul li a:hover {
+    background-color: #d3d3d3;
+}
+
+.tab-menu ul li a.active {
+    background-color: white; 
+    position: relative; /* Для использования z-index, элемент должен быть positioned */
+	z-index: 1; /* Убедитесь, что вкладка находится над другими элементами */	
+}
+
+.tab-menu ul li {
+    padding: 10px 20px; /* Уменьшить padding, если вкладки слишком раздвинуты */
+    margin-right: -41px; /* Если есть рамка, то это поможет вкладкам прилегать вплотную друг к другу */
+    white-space: nowrap; /* Предотвращает перенос текста в вкладках на новую строку */	
+}
+
+.tab-menu ul li a {
+    text-decoration: none;
+    color: #333; /* Темно-серый цвет текста для лучшей читаемости */
+    background-color: white;
+    padding: 5px 20px;
+    display: block;
+    border: 1px solid #ccc; /* Рамка вокруг вкладки */
+	border-bottom: none; /* Убрать нижнюю границу для эффекта "активной" вкладки */	
+}
+
+/* ... ==ВКЛАДКА КАРТОТЕКА== ... */
+
+.main-wrapper {
+    display: flex;
+    padding:  0 20px;
+}
+
+.main-content {
+    flex-grow: 1;
+    margin-right: 20px; /* Добавляем отступ справа от белых блоков */
+	margin-top: -11px;
+}
+
+.content, .data-table {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 20px; /* Отступ между блоками */
+}
+
+
+
+.data-table {
+    height: 500px; /* Высота второго белого блока */
+    margin-bottom: 0; /* Убираем отступ для последнего элемента */
+}
+
+.filter-section {
+    width: 400px;
+    background-color: #e9e9e9;
+    border: 1px solid #ddd;
+    padding: 0 20px;
+    box-sizing: border-box;
+	margin-top: -11px;
+}
+
+.status-bar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #e9e9e9;
+    padding: 5px 20px;
+    border-top: 2px solid #d3d3d3;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ФИЛЬТР */
+.filter-section {
+    /* Стили контейнера фильтра */
+}
+
+.filter-form {
+    /* Стили формы фильтра */
+}
+
+.Poisk {
+	margin-top: 10px;
+}
+
+.form-group {
+	margin-top: 10px;
+    margin-bottom: 7px;
+}
+
+.form-group label {
+    display: block;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"] {
+    width: 97%;
+    padding: 4px;
+}
+
+/* Особый стиль для label рядом с чекбоксами */
+.form-group input[type="checkbox"] + label {
+    margin-top: -20px; 
+    margin-left: 25px; /* Добавляем отступ слева от чекбокса */
+    /* Дополнительные стили для label чекбокса, если нужно */
+}
+
+.form-group button {
+	margin-top: 20px;
+    padding: 5px 10px;
+    margin-right: 5px;
+}
+
+/* ТАБЛИЦА С ФИО */
+.data-table {
+    width: 100%; /* Задаем ширину таблицы */
+    border-collapse: collapse; /* Убираем двойные границы между ячейками */
+}
+
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th, 
+.data-table td {
+    border: 1px solid #ddd; /* Рамка вокруг каждой ячейки */
+    padding: 8px; /* Отступ внутри ячеек */
+    text-align: center; /* Выравнивание текста в ячейках */
+}
+
+.data-table th {
+    background-color: #f2f2f2; /* Цвет фона для заголовков */
+    color: #333; /* Цвет текста заголовков */
+}
+
+/* Стилизация строки таблицы при наведении */
+.data-table tr:hover {
+    background-color: #ddd; /* Светло-серый фон при наведении */
+}
+.selected-row {
+    background-color: #ccccff; /*  цвет для выделения */
+}
+
+/* БЛОК с ДАННЫМИ ПАЦИЕНТА */
+.label-snils {
+	font-weight: bold;
+    /*background-color: #FF8989;*/
+    color: #000000;
+    border-radius: 4px; /* Закругление углов */
+}
+.label-mis {
+	font-weight: bold;
+    background-color: #FF8989;
+    color: #000000;
+    border-radius: 4px; /* Закругление углов */
+}
+
+.label-document {
+	font-weight: bold;
+    background-color: #FF8989;
+    color: #000000;
+    border-radius: 4px; /* Закругление углов */
+}
+
+.label-oms {
+	font-weight: bold;
+    /*background-color: #DC3545; /* Красный */
+    color: #000000;
+    border-radius: 4px; /* Закругление углов */
+}
+
+.label-address {
+	font-weight: bold;
+    /*background-color: #FFC107;  Жёлтый */
+    color: #000000; /* Чёрный текст для контраста */
+    border-radius: 4px; /* Закругление углов */
+}
+
+.label-fluorography {
+	font-weight: bold;
+    background-color: #FF8989;
+    color: #000000;
+    border-radius: 4px; /* Закругление углов */
+}
+
+.label-rentgen {
+	font-weight: bold;
+    color: #000000;
+}
+
+.content {
+	height: 250px; /* Высота первого белого блока */
+    background-color: #fff; /* Фон для всей секции */
+    padding: 10px 10px; /* Отступы внутри секции */
+    border: 1px solid #ddd; /* Граница вокруг секции */
+}
+
+.info-block {
+    margin-bottom: 8px; /* Отступ между блоками информации */
+    display: flex; /* Для расположения метки и значения в одной строке */
+    align-items: center; /* Выравнивание элементов в строке по центру */
+}
+
+.info-block label {
+    margin-right: 10px; /* Отступ между меткой и значением */
+    white-space: nowrap; /* Метка не переносится на новую строку */
+	display: inline-block;
+    padding: 2px 4px; /* Небольшие внутренние отступы */
+}
+
+.info-block span {
+	margin-right: 10px;
+    display: inline-block; /* Обеспечиваем, что span ведет себя как блочный элемент */
+}
+
+.info-block .i_name {
+    /* Стили для имени */
+    font-weight: bold; /* Жирное начертание для имени */
+    color: #000; /* Цвет текста для имени */
+}
+.info-block .i_code {
+    font-weight: bold; /* Жирное начертание для имени */
+    color: #0000FF; /* Цвет текста для кода */
+}
+
+
+
+
+

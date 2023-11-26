@@ -1,0 +1,301 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Медицинское приложение</title>
+    <link rel="stylesheet" href="{% static 'css/mis_style.css' %}">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-menu">
+            <ul>
+                <li><a href="#">Сессия</a></li>
+                <li><a href="#">Работа</a></li>
+				<li><a href="#">Расчёт</a></li>
+                <li><a href="#">Обмен</a></li>
+				<li><a href="#">Анализ</a></li>
+				<li><a href="#">Справочники</a></li>
+				<li><a href="#">Сервис</a></li>
+				<li><a href="#">Настройки</a></li>
+				<li><a href="#">Помощь</a></li>
+
+            </ul>
+        </nav>
+
+    </header>
+	<div>
+	    <nav class="tab-menu">
+            <ul>
+                <li><a href="#">Картотека</a></li>
+				<li><a href="#">Обращение</a></li>
+				<li><a href="#">Мед.карта</a></li>
+				<li><a href="#">Обслуживание</a></li>
+				<li><a href="#">КЭР</a></li>
+				<li><a href="#">Направление на МСЭ</a></li>
+				<li><a href="#">Мой участок</a></li>
+            </ul>
+        </nav>	
+	</div>
+    <div class="main-wrapper">
+        <main class="main-content">
+            <section class="content">
+				<div class="info-block">
+                        &nbsp;<span class="i_name" style="font-size: 15pt;"><strong>{{selected_patient.last_name}} {{selected_patient.first_name}} {{selected_patient.patronymic}}</strong></span>
+                        дата рождения:&nbsp;<span class="i_birthdate"><strong>{{selected_patient.birth_date}}</strong>,</span>
+                        пол:&nbsp;<span class="i_gender"><strong>{{selected_patient.sex}}</strong>,</span>
+                        код:&nbsp;<span class="i_code"><strong>{{selected_patient.code}}</strong></span>
+				</div>
+				<div class="info-block">
+                        <label class="label-snils">СНИЛС:</label>
+                        <span class="i_snils">{{selected_patient.snils}}</span>
+				</div>
+				<div class="info-block">
+                        <label class="label-mis">Прикрепление в МИС:</label>
+                        <span class="i_attachment">{{selected_patient.attachment}}</span>
+				</div>
+				<div class="info-block">
+                        <label class="label-document">Документ:</label>
+                        <span class="i_document">{{selected_patient.document}}</span>
+				</div>
+				<div class="info-block">
+                        <label class="label-oms">Полис ОМС:</label>
+                        <span class="i_polis">{{selected_patient.polis}}</span>
+				</div>
+				<div class="info-block">
+                        <label class="label-address">Адрес проживания:</label>
+                        <span class="i_address">{{selected_patient.address}}</span>
+				</div>
+				<div class="info-block">
+                        <label class="label-fluorography">Флюорография:</label>
+                        <span class="i_fluorography">{{selected_patient.fluorography}}</span>
+				</div>
+				<div class="info-block">
+					<label class="label-rentgen">Рентген:</label>
+					<span>Найти исследования</span>
+				</div>
+            </section>
+            <!-- Скрытая форма для отправки patient.id -->
+            <form id="patientForm" method="post" action="{% url 'MisWork' %}">
+                {% csrf_token %}
+                <input type="hidden" name="patient_id" value="">
+            </form>
+            <section class="data-table">
+				<table>
+					<thead>
+						<tr>
+							<th>Фамилия</th>
+							<th>Имя</th>
+							<th>Отчество</th>
+							<th>Дата рожд.</th>
+							<th>Пол</th>
+							<th>СНИЛС</th>
+							<!-- Добавьте другие заголовки колонок по аналогии -->
+						</tr>
+					</thead>
+					<tbody>
+                         {% for patient in patients %}
+                            <tr class="patient-row" data-patient-id="{{ patient.id }}">
+                                <td>{{ patient.last_name }}</td>
+                                <td>{{ patient.first_name }}</td>
+                                <td>{{ patient.patronymic }}</td>
+                                <td>{{ patient.birth_date }}г.</td>
+                                <td>{{ patient.sex }}</td>
+                                <td>{{ patient.snils }}</td>
+                            </tr>
+                        {% endfor %}
+					</tbody>
+				</table>
+            </section>
+        </main>
+<aside class="filter-section">
+    <form class="filter-form"  method="post" action="{% url 'MisWork' %}">
+        {% csrf_token %}
+		<div class="Poisk">
+            <label>Поиск</label>
+        </div>
+		<div class="form-group">
+            <label for="codname">Код</label>
+            <input type="text" id="codname" name="codname" value="{{ filter.codname }}">
+        </div>
+        <div class="form-group">
+            <label for="surname">Фамилия</label>
+            <input type="text" id="surname" name="surname" value="{{ filter.surname }}">
+        </div>
+        <div class="form-group">
+            <label for="name">Имя</label>
+            <input type="text" id="name" name="name" value="{{ filter.name }}">
+        </div>
+        <div class="form-group">
+            <label for="patronymic">Отчество</label>
+            <input type="text" id="patronymic" name="patronymic" value="{{ filter.patronymic }}">
+        </div>
+		<div class="form-group">
+            <label for="snils">СНИЛС</label>
+            <input type="text" id="snils" name="snils" value="{{ filter.snils }}">
+        </div>
+        <div class="form-group">
+            <label for="date_from">Дата рождения от</label>
+            <input type="date" id="date_from" name="date_from" value="{{ filter.date_from }}">
+        </div>
+        <div class="form-group">
+            <label for="date_to">Дата рождения до</label>
+            <input type="date" id="date_to" name="date_to" value="{{ filter.date_to }}">
+        </div>
+        <!-- Чекбоксы -->
+        <div class="form-group">
+            <input type="checkbox" id="checkbox1" name="checkbox1">
+            <label for="checkbox1">Документ</label>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" id="checkbox2" name="checkbox2">
+            <label for="checkbox2">Полис</label>
+        </div>
+		<div class="form-group">
+            <input type="checkbox" id="checkbox3" name="checkbox3">
+            <label for="checkbox3">Адрес</label>
+        </div>
+		<div class="form-group">
+            <input type="checkbox" id="checkbox4" name="checkbox4">
+            <label for="checkbox4">Занятость</label>
+        </div>
+		<div class="form-group">
+            <input type="checkbox" id="checkbox5" name="checkbox5">
+            <label for="checkbox5">Есть свободные талоны</label>
+        </div>
+		<div class="form-group">
+            <input type="checkbox" id="checkbox6" name="checkbox6">
+            <label for="checkbox6">ПЦЛЛО</label>
+        </div>
+		<div class="form-group">
+            <input type="checkbox" id="checkbox7" name="checkbox7">
+            <label for="checkbox7">Пациенты ТМК</label>
+        </div>
+        <!-- Добавьте дополнительные чекбоксы по аналогии -->
+        <div class="form-group">
+            <button type="submit">Применить</button>
+            <button type="reset">Сбросить</button>
+        </div>
+    </form>
+</aside>
+    </div>
+
+    <footer class="status-bar">
+        <!-- Статус-бар -->
+    </footer>
+<script>	
+document.addEventListener('DOMContentLoaded', () => {
+        // Блок обработки клика на вкладке
+    const tabs = document.querySelectorAll('.tab-menu a');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log("Клик по вкладке:", tab.textContent); // Для проверки
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+             // Проверка, является ли вкладка вкладкой "КАРТОТЕКА"
+            {#if (tab.textContent.trim() === 'Картотека') {#}
+            {#    // Добавьте здесь код, который должен выполняться при клике на вкладку "КАРТОТЕКА"#}
+            {#    console.log("Вкладка КАРТОТЕКА активирована");#}
+            {## } ##}
+        });
+    });
+        // Блок обработки клика на строке таблицы
+    const rows = document.querySelectorAll('.patient-row');
+    rows.forEach(row => {
+        row.addEventListener('click', function() {
+            rows.forEach(r => r.classList.remove('selected-row'));
+            this.classList.add('selected-row');
+
+            const patientId = this.getAttribute('data-patient-id');
+            fetch('/path-to-your-django-view/' + patientId)
+                .then(response => response.json())
+                .then(data => {
+                    updatePatientInfo(data);
+                })
+                .catch(error => console.error('Ошибка:', error));
+        });
+    });
+        // Найти первую строку в таблице и добавить ей класс для выделения
+    const firstRow = document.querySelector('.patient-row');
+    if (firstRow) {
+        firstRow.classList.add('selected-row');
+        // Программно вызвать событие клика на первой строке
+        firstRow.click();
+    }
+    const resetButton = document.querySelector('.filter-form button[type="reset"]');
+    const formElements = document.querySelectorAll('.filter-form input:not([type="hidden"]), .filter-form select');
+    resetButton.addEventListener('click', (e) => {
+        e.preventDefault(); // Предотвращаем стандартное действие кнопки
+        formElements.forEach(element => {
+            if (element.type === 'checkbox' || element.type === 'radio') {
+                element.checked = false; // Сброс флажков и радиокнопок
+            } else {
+                element.value = ''; // Сброс текстовых полей и полей дат
+            }
+        });
+    });
+});
+// функция обновляет данные о пациенты по элементно с условиями
+function updatePatientInfo(patientData) {
+    // Обновление информации о пациенте на странице
+    document.querySelector('.i_name strong').textContent = patientData.full_name;
+    document.querySelector('.i_birthdate strong').textContent = patientData.birth_date;
+    document.querySelector('.i_gender strong').textContent = patientData.gender;
+    document.querySelector('.i_code strong').textContent = patientData.code;
+    document.querySelector('.i_snils').textContent = patientData.snils;
+        const labelSnilsElement = document.querySelector('.label-snils');
+        if (patientData.snils === null || patientData.snils === '') {
+            // Если SNILS равен None или пустой строке, применить один стиль
+            labelSnilsElement.style.backgroundColor = '#FF8989'; // Например, красный фон
+            labelSnilsElement.style.color = '#000000'; // Чёрный текст
+            labelSnilsElement.textContent = 'Данные отсутствуют';
+        } else {
+            // Если SNILS имеет значение, применить другой стиль
+            labelSnilsElement.style.backgroundColor = '#ffffff'; // Например, зелёный фон
+            labelSnilsElement.style.color = '#000000'; // Чёрный текст
+        }
+    document.querySelector('.i_attachment').textContent = patientData.attachment;
+            const attachmentElement = document.querySelector('.label-mis');
+        if (patientData.attachment === null || patientData.attachment === 'в базе ТФОМС данные отсутствуют') {
+            // Если SNILS равен None или пустой строке, применить один стиль
+            attachmentElement.style.backgroundColor = '#FF8989'; // Например, красный фон
+            attachmentElement.style.color = '#000000'; // Чёрный текст
+        } else {
+            // Если SNILS имеет значение, применить другой стиль
+            attachmentElement.style.backgroundColor = '#89FF89'; // Например, зелёный фон
+            attachmentElement.style.color = '#000000'; // Чёрный текст
+        }
+    document.querySelector('.i_document').textContent = patientData.document;
+                const documentElement = document.querySelector('.label-document');
+        if (patientData.document === null || patientData.document === '') {
+            // Если SNILS равен None или пустой строке, применить один стиль
+            documentElement.style.backgroundColor = '#FF8989'; // Например, красный фон
+            documentElement.style.color = '#000000'; // Чёрный текст
+            document.querySelector('.i_document').textContent = 'Данные отсутствуют';
+        } else {
+            // Если SNILS имеет значение, применить другой стиль
+            documentElement.style.backgroundColor = '#ffffff'; // Например, зелёный фон
+            documentElement.style.color = '#000000'; // Чёрный текст
+        }
+    document.querySelector('.i_polis').textContent = patientData.polis;
+    document.querySelector('.i_address').textContent = patientData.address;
+    document.querySelector('.i_fluorography').textContent = patientData.fluorography;
+                    const fluorographyElement = document.querySelector('.label-fluorography');
+        if (patientData.fluorography === null || patientData.fluorography === 'не делалась') {
+            // Если SNILS равен None или пустой строке, применить один стиль
+            fluorographyElement.style.backgroundColor = '#FF8989'; // Например, красный фон
+            fluorographyElement.style.color = '#000000'; // Чёрный текст
+            document.querySelector('.i_fluorography').textContent = 'Данные отсутствуют';
+        } else {
+            // Если SNILS имеет значение, применить другой стиль
+            fluorographyElement.style.backgroundColor = '#ffffff'; // Например, зелёный фон
+            fluorographyElement.style.color = '#000000'; // Чёрный текст
+        }
+}
+//работа с фильтром
+
+
+</script>	
+</body>
+</html>
